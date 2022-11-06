@@ -38,7 +38,8 @@ class App extends Component {
             .then((users) => this.setState(() => {
                 return {monsters: users}
             },
-            () => { console.log(this.state);
+            () => { 
+                console.log(this.state);
             }
         ));
     }
@@ -62,13 +63,32 @@ class App extends Component {
                 <h1>{this.state.monster2.name}</h1>
                 <h1>{this.state.monster3.name}</h1> */}
 
+                <input 
+                    className='search-box' 
+                    type='search' 
+                    placeholder='Search Monsters'
+                    onChange={(event) => {
+                        console.log(event.target.value);
+                        const searchstring = event.target.value.toLocaleLowerCase();
+                        const filtermonsters = this.state.monsters.filter((monster) => {
+                            return monster.name.toLocaleLowerCase().includes(searchstring);
+                        });
+
+                        this.setState(() => {
+                            return {monsters: filtermonsters};
+                        });
+                    }}
+                />
                 {
                     this.state.monsters.map((monster) => {
+                        return(
                         <div key={monster.id}>
-                        return <h1>{monster.name}</h1>;
+                        <h1>{monster.name}</h1>
                         </div>
+                        );
                     })
                 }
+
             </div>
         );
     }
