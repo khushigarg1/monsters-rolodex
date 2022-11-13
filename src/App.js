@@ -12,6 +12,7 @@ class App extends Component {
             //     lastName : 'Zhang'
             // },
             monsters:[],
+            searchField: ''
             //  {
             //     name: 'linda'
             // },
@@ -43,8 +44,11 @@ class App extends Component {
             }
         ));
     }
-
+    
     render() {
+        const filtermonsters = this.state.monsters.filter((monster) => {
+            return monster.name.toLocaleLowerCase().includes(this.state.searchField);
+        });
         return (
             <div className="App">
                 {/* <header className="App-header">
@@ -68,19 +72,20 @@ class App extends Component {
                     type='search' 
                     placeholder='Search Monsters'
                     onChange={(event) => {
-                        console.log(event.target.value);
-                        const searchstring = event.target.value.toLocaleLowerCase();
-                        const filtermonsters = this.state.monsters.filter((monster) => {
-                            return monster.name.toLocaleLowerCase().includes(searchstring);
-                        });
+                        
+                        // console.log(event.target.value);
+                        console.log({startingArray: this.state.monsters});
+                        const searchField = event.target.value.toLocaleLowerCase();
 
-                        this.setState(() => {
-                            return {monsters: filtermonsters};
-                        });
+                        this.setState(
+                            () => {
+                            return { searchField };
+                            }
+                        );
                     }}
                 />
                 {
-                    this.state.monsters.map((monster) => {
+                    filtermonsters.map((monster) => {
                         return(
                         <div key={monster.id}>
                         <h1>{monster.name}</h1>
