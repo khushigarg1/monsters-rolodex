@@ -1,5 +1,7 @@
 import { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
+import CardList from './components/card-list/card-list.component';
+import Searchbox from './components/search-box/search-box.component';
 import './App.css';
 
 class App extends Component {
@@ -12,7 +14,7 @@ class App extends Component {
             //     lastName : 'Zhang'
             // },
             monsters:[],
-            searchField: ''
+            searchField: '',
             //  {
             //     name: 'linda'
             // },
@@ -36,18 +38,35 @@ class App extends Component {
         fetch('https://jsonplaceholder.typicode.com/users')
             .then((response) => response.json())
             // .then((users) => console.log(users));
-            .then((users) => this.setState(() => {
-                return {monsters: users}
-            },
-            () => { 
-                console.log(this.state);
-            }
-        ));
+            .then((users) => 
+                this.setState(
+                    () => {
+                    return {monsters: users};
+                    }
+                )
+            );
     }
     
+    onSearchchange = (event) => {
+                        
+        // console.log(event.target.value);
+        // console.log({startingArray: this.state.monsters});
+        const searchField = event.target.value.toLocaleLowerCase();
+
+        this.setState(
+            () => {
+            return { searchField };
+            }
+        );
+    };
+
     render() {
-        const filtermonsters = this.state.monsters.filter((monster) => {
-            return monster.name.toLocaleLowerCase().includes(this.state.searchField);
+        console.log('render from app.js');
+        const {monsters, searchField } = this.state;
+        const {onSearchchange} = this;
+
+        const filtermonsters = monsters.filter((monster) => {
+            return monster.name.toLocaleLowerCase().includes(searchField);
         });
         return (
             <div className="App">
@@ -67,33 +86,20 @@ class App extends Component {
                 <h1>{this.state.monster2.name}</h1>
                 <h1>{this.state.monster3.name}</h1> */}
 
-                <input 
+                {/* <input 
                     className='search-box' 
                     type='search' 
                     placeholder='Search Monsters'
-                    onChange={(event) => {
-                        
-                        // console.log(event.target.value);
-                        console.log({startingArray: this.state.monsters});
-                        const searchField = event.target.value.toLocaleLowerCase();
+                    onChange={onSearchchange}
+                /> */}
 
-                        this.setState(
-                            () => {
-                            return { searchField };
-                            }
-                        );
-                    }}
+                <Searchbox 
+                    className='search-box'
+                onChangeHandler={onSearchchange}
+                placeholder='search Monsters' 
                 />
-                {
-                    filtermonsters.map((monster) => {
-                        return(
-                        <div key={monster.id}>
-                        <h1>{monster.name}</h1>
-                        </div>
-                        );
-                    })
-                }
-
+                
+                <CardList monsters={filtermonsters}  />
             </div>
         );
     }
