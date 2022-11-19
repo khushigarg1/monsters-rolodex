@@ -13,7 +13,7 @@ class App extends Component {
             //     firstName: 'YIHUA',
             //     lastName : 'Zhang'
             // },
-            monsters:[],
+             monsters:[],
             searchField: '',
             //  {
             //     name: 'linda'
@@ -70,6 +70,7 @@ class App extends Component {
         });
         return (
             <div className="App">
+                <h1 className='app-title'>Monsters Rolodex</h1>
                 {/* <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     <p>heyy {this.state.name.firstName} {this.state.name.lastName}, works at {this.state.company}</p>
@@ -94,7 +95,7 @@ class App extends Component {
                 /> */}
 
                 <Searchbox 
-                    className='search-box'
+                    className='monsters-search-box'
                 onChangeHandler={onSearchchange}
                 placeholder='search Monsters' 
                 />
