@@ -103,7 +103,7 @@ const App = () => {
 
 //     onSearchchange = (event) => {
 
-//         // console.log(event.target.value);
+//         console.log(event.target.value);
 //         // console.log({startingArray: this.state.monsters});
 //         const searchField = event.target.value.toLocaleLowerCase();
 
