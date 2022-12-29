@@ -1,5 +1,6 @@
-import { Component } from "react";
-import './card.styles.css'
+// import { Component } from "react";
+import { Monster } from '../../App';
+import './card.styles.css';
 
 // class Card extends Component {
 //     render() {
@@ -20,8 +21,14 @@ import './card.styles.css'
 
 // const Card = ({ monster:{id,name, email} }) => {
 //     // const { id, name, email } = monster;
-const Card = ({ monster }) => {
+
+type CardProps = {
+    monster: Monster;
+};
+
+const Card = ({ monster }: CardProps) => {
     const { id, name, email } = monster;
+
     return (
         <div className="card-container" key={id}>
             <img className="card-img"

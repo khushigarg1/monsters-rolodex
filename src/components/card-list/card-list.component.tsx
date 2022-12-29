@@ -1,4 +1,5 @@
-import { Component } from "react";
+// import { Component } from "react";
+import { Monster } from "../../App";
 import Card from "../card/card.component";
 import './card-list.styles.css';
 
@@ -20,7 +21,11 @@ import './card-list.styles.css';
 //     }
 // }
 
-const CardList = ({ monsters }) => (
+type CardListProps = {
+    monsters: Monster[];
+};
+
+const CardList = ({ monsters }: CardListProps) => (
     <div className="Card-List">
         {monsters.map((monster) => {
             return <Card monster={monster} />;

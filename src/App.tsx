@@ -1,22 +1,37 @@
 // import { useState } from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { Component } from 'react';
 // import logo from './logo.svg';
 import CardList from './components/card-list/card-list.component';
 import Searchbox from './components/search-box/search-box.component';
 import './App.css';
+import { getData } from './utils/data.utils';
+
+export type Monster = {
+    id: string;
+    name: string;
+    email: string;
+}
 
 const App = () => {
     const [searchField, setSearchField] = useState(' ');  //[value(we want to store ), setValue function]
     const [title, setTitle] = useState('');
-    const [monsters, setMonsters] = useState([]);
+    const [monsters, setMonsters] = useState<Monster[]>([]);
+    // const [monsters, setMonsters] = useState([]);
     const [filterdMonsters, setFilterMonsters] = useState(monsters);
 
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/users')
-        .then((response) => response.json())
+        // fetch('https://jsonplaceholder.typicode.com/users')
+        // .then((response) => response.json())
         // .then((users) => console.log(users));
-        .then((users) => setMonsters(users));
+        // .then((users) => setMonsters(users));
+
+    //---------------------------------------------typescript
+        const fetchUSers = async ()=>{
+            const users = await getData<Monster[]>('https://jsonplaceholder.typicode.com/users');
+            setMonsters(users);
+        };
+        fetchUSers();
     }, []);
 
     useEffect(() =>{
@@ -26,12 +41,23 @@ const App = () => {
         setFilterMonsters(newfiltermonsters);
     }, [monsters, searchField]);
 
-    const onSearchchange = (event) => {
+    // const onSearchchange = (event) => {
+    //     const searchFieldstring = event.target.value.toLocaleLowerCase();
+    //     setSearchField(searchFieldstring);
+    // };
+    
+    // const onTitleChange = (event) => {
+    //     const searchFieldstring = event.target.value.toLocaleLowerCase();
+    //     setTitle(searchFieldstring);
+    // };
+
+    //---------------------------------------------typescript
+    const onSearchchange = (event: ChangeEvent<HTMLInputElement>) => {
         const searchFieldstring = event.target.value.toLocaleLowerCase();
         setSearchField(searchFieldstring);
     };
     
-    const onTitleChange = (event) => {
+    const onTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const searchFieldstring = event.target.value.toLocaleLowerCase();
         setTitle(searchFieldstring);
     };
@@ -61,7 +87,6 @@ const App = () => {
 // class App extends Component {
 //     constructor() {
 //         super();
-
 //         this.state = {
 //             // name : { 
 //             //     firstName: 'YIHUA',
